@@ -42,4 +42,5 @@ h1, h4 {
     display: flex;
     transform: translateY(-30px);
     justify-content:center;
+    text-align: center;
 }
