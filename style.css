@@ -1,10 +1,14 @@
-.repo_element {
-    width: 100%;
-    background-color: aliceblue;
-    aspect-ratio: 1/0.5;
-}
-
 #repo-list {
     display: flex;
+    flex-wrap: wrap; /* Allows items to drop to the next line */
     order: 2;
+}
+
+.repo_element {
+    /* Adjust width to control how many items fit per row (e.g., ~30% for 3 items) */
+    width: calc(33.333% - 16px); 
+    background-color: rgb(219, 224, 230);     
+    aspect-ratio: 2/1; /* Cleaned up 1/0.5 syntax */    
+    margin: 8px; 
+    box-sizing: border-box; /* Ensures padding/borders don't break the width calculation */
 }
