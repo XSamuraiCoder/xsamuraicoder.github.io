@@ -1,0 +1,10 @@
+.repo_element {
+    width: 100%;
+    background-color: aliceblue
+    aspect-ratio: 1/0.5;
+}
+
+#repo-list {
+    display: flex;
+    order: 2;
+}
