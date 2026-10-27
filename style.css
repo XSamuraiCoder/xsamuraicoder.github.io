@@ -27,4 +27,19 @@ h1, h4 {
     aspect-ratio: 2/1; /* Cleaned up 1/0.5 syntax */    
     margin: 8px; 
     box-sizing: border-box; /* Ensures padding/borders don't break the width calculation */
+    border-radius: 30px;
+}
+
+#repo-title {
+    font-size: 24px;
+    display: flex;
+    transform: translateY(-30px);
+    justify-content:center;
+}
+
+#repo-desc {
+    font-size: 18px;
+    display: flex;
+    transform: translateY(-30px);
+    justify-content:center;
 }
