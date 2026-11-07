@@ -1,45 +1,49 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const username = 'XSamuraiCoder';
-    const url = `https://api.github.com/users/${username}/repos?per_page=100`;
+document.addEventListener("DOMContentLoaded", () => {
+  const username = "XSamuraiCoder";
+  const listElement = document.getElementById("repo-list");
+  const DESCRIPTIONS = {};
 
-    fetch(url)
-        .then(response => response.json())
-        .then(repos => {
-            const listElement = document.getElementById('repo-list');
+  fetch(`https://api.github.com/users/${username}/repos?per_page=100`)
+    .then((response) => {
+      if (!response.ok) throw new Error(`GitHub API returned ${response.status}`);
+      return response.json();
+    })
+    .then((repos) => {
+      repos
+        .filter((repo) => repo.name !== "xsamuraicoder.github.io")
+        .forEach((repo) => {
+          const card = document.createElement("div");
+          card.className = "repo_element";
 
-            // Safety check: ensure the element actually exists
-            if (!listElement) {
-                console.error("Element #repo-list not found in the DOM.");
-                return;
-            }
+          const title = document.createElement("h6");
+          title.className = "repo-title";
+          title.textContent = repo.name;
 
-            DESCRIPTIONS = {}
-            
-            repos.forEach(repo => {
-                const repo_div = document.createElement('div');
-                const repo_title = document.createElement('h6');
-                const repo_desc = document.createElement("p");
+          const desc = document.createElement("p");
+          desc.className = "repo-desc";
+          desc.textContent = repo.description ?? DESCRIPTIONS[repo.name] ?? "No Description Given.";
 
-                repo_title.href = repo.html_url;
-                repo_title.textContent = repo.name;
-                repo_title.target = '_blank';
-                repo_div.className = "repo_element"
+          const links = document.createElement("div");
+          links.className = "repo-links";
 
-                repo_title.id = "repo-title"
-                
-                repo_desc.id = "repo-desc"
-                if (repo.description != null) {
-                    repo_desc.textContent = repo.description
-                } else if (DESCRIPTIONS[repo.name] != null) {
-                    repo_desc.textContent = DESCRIPTIONS[repo.name]
-                } else {
-                    repo_desc.textContent = "No Description Given."
-                }
+          const repoLink = document.createElement("a");
+          repoLink.textContent = "Open Repo";
+          repoLink.href = repo.html_url;
+          links.appendChild(repoLink);
 
-                repo_div.appendChild(repo_title);
-                repo_div.appendChild(repo_desc);
-                listElement.appendChild(repo_div);
-            });
-        })
-        .catch(error => console.error('Error fetching repos:', error));
+          if (repo.has_pages) {
+            const pageLink = document.createElement("a");
+            pageLink.textContent = "Open Page";
+            pageLink.href = `https://${username.toLowerCase()}.github.io/${repo.name}/`;
+            links.appendChild(pageLink);
+          }
+
+          card.append(title, desc, links);
+          listElement.appendChild(card);
+        });
+    })
+    .catch((error) => {
+      listElement.textContent = "Couldn't load projects right now. Try again later.";
+      console.error(error);
+    });
 });

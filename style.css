@@ -21,26 +21,22 @@ h1, h4 {
 }
 
 .repo_element {
-    /* Adjust width to control how many items fit per row (e.g., ~30% for 3 items) */
-    width: calc(33.333% - 16px); 
-    background-color: rgb(219, 224, 230);     
-    aspect-ratio: 2/1; /* Cleaned up 1/0.5 syntax */    
-    margin: 8px; 
-    box-sizing: border-box; /* Ensures padding/borders don't break the width calculation */
+    width: calc(33.333% - 16px);
+    margin: 8px;
+    padding: 16px 20px;
+    box-sizing: border-box;
     border-radius: 30px;
-}
-
-#repo-title {
-    font-size: 24px;
+    background-color: rgb(219, 224, 230);
     display: flex;
-    transform: translateY(-30px);
-    justify-content:center;
-}
-
-#repo-desc {
-    font-size: 18px;
-    display: flex;
-    transform: translateY(-30px);
-    justify-content:center;
+    flex-direction: column;   /* stack title, description, links */
+    height: 250px;
+    align-items: center;
     text-align: center;
 }
+
+.repo-title { font-size: 24px; margin: 0 0 8px; }
+.repo-desc  { font-size: 18px; margin: 0; flex-grow: 1; } /* pushes links to the bottom */
+.repo-links { display: flex; gap: 16px; margin-top: 12px; }
+
+@media (max-width: 800px) { .repo_element { width: calc(50% - 16px); } }
+@media (max-width: 500px) { .repo_element { width: 100%; } }
